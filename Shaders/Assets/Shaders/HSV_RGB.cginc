@@ -2,7 +2,7 @@
 float3 HSVtoRGB(float h, float s, float v)
 {
 	float c = v * s;
-	float hp = h % 1.0 * 6.0;
+	float hp = (h % 1.0 + 1.0) % 1.0 * 6.0;
 	float x = c * (1.0 - abs(hp % 2.0 - 1));
 	float m = v - c;
 

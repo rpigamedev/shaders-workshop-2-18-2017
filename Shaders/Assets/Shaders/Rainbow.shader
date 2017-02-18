@@ -2,10 +2,12 @@
 {
 	Properties
 	{
+		_Scale("Scale", float) = 1.0
+		_Speed("Speed", float) = 1.0
 	}
-	SubShader
+		SubShader
 	{
-		Tags { "RenderType"="Opaque" }
+		Tags { "RenderType" = "Opaque" }
 		LOD 100
 
 		Pass
@@ -13,9 +15,12 @@
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			
+
 			#include "UnityCG.cginc"
 			#include "HSV_RGB.cginc"
+
+			float _Scale;
+			float _Speed;
 
 			struct appdata
 			{
@@ -39,8 +44,8 @@
 			
 			float4 frag (v2f i) : SV_Target
 			{
-				// sample the texture
-				float4 col = float4(HSVtoRGB(_Time.x + length(i.uv - float2(0.5, 0.5)) * sqrt(2.0), 1.0, 1.0), 1.0);
+				float2 coord = i.uv - float2(0.5, 0.5);
+				float4 col = float4(HSVtoRGB(_Time.x * _Speed + length(coord) * sqrt(2.0) * _Scale, 1.0, 1.0), 1.0);
 				return col;
 			}
 			ENDCG
